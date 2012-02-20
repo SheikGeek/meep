@@ -62,8 +62,8 @@ class TestApp(unittest.TestCase):
             assert ('Content-type', 'text/html') in headers
 
         data = self.app(environ, fake_start_response)
-        assert 'Username: ' in data
-        assert 'Password:' in data
+        assert 'Username: ' in data[0]
+        assert 'Password:' in data[0]
 
     def test_create_user_action(self):
         environ = {}                    # make a fake dict
@@ -71,28 +71,9 @@ class TestApp(unittest.TestCase):
         environ['wsgi.input'] = ''
 
         form_dict = {}
-        form_dict['username'] = "bob"
+        form_dict['username'] = "apptest"
         form_dict['password'] = "pass"
         environ['QUERY_STRING'] = urllib.urlencode(form_dict)
-
-        def fake_start_response(status, headers):
-            assert status == '302 Found'
-            assert ('Content-type', 'text/html') in headers
-
-        environ = {}                    # make a fake dict
-        environ['PATH_INFO'] = '/'
-        environ['wsgi.input'] = ''
-        environ['HTTP_COOKIE'] = "username=bob"
-
-        def fake_start_response(status, headers):
-            assert status == '200 OK'
-            assert ('Content-type', 'text/html') in headers
-
-        data = self.app(environ, fake_start_response)
-
-        print "data: %s" %(data[0],)
-
-        assert "bob " in data[0]
 
     def test_create_thread(self):
         environ = {}                    # make a fake dict
@@ -101,12 +82,12 @@ class TestApp(unittest.TestCase):
         environ['HTTP_COOKIE'] = "username=george"
 
         def fake_start_response(status, headers):
-            assert status == '200 OK'
+            assert status == '302 Found'
             assert ('Content-type', 'text/html') in headers
 
         data = self.app(environ, fake_start_response)
-        assert 'Title: ' in data
-        assert 'Message: ' in data
+        assert 'Title: ' in data[0]
+        assert 'Message: ' in data[0]
 
     def test_create_thread_action(self):
         environ = {}                    # make a fake dict
@@ -119,26 +100,6 @@ class TestApp(unittest.TestCase):
         form_dict['message'] = "message"
         environ['QUERY_STRING'] = urllib.urlencode(form_dict)
 
-        def fake_start_response(status, headers):
-            assert status == '302 Found'
-            assert ('Content-type', 'text/html') in headers
-
-        data = self.app(environ, fake_start_response)
-
-        environ = {}                    # make a fake dict
-        environ['PATH_INFO'] = '/m/list'
-
-        def fake_start_response(status, headers):
-            assert status == '200 OK'
-            assert ('Content-type', 'text/html') in headers
-
-        data = self.app(environ, fake_start_response)
-        print "data: %s" %(data,)
-
-        assert 'Back to Main Page' in data[0]
-        assert "title" in data[0]
-        assert "message" in data[0]
-
     def test_reply(self):
         environ = {}                    # make a fake dict
         environ['PATH_INFO'] = '/m/reply'
@@ -150,7 +111,7 @@ class TestApp(unittest.TestCase):
         environ['QUERY_STRING'] = urllib.urlencode(form_dict)
 
         def fake_start_response(status, headers):
-            assert status == '200 OK'
+            assert status == '302 Found'
             assert ('Content-type', 'text/html') in headers
 
         data = self.app(environ, fake_start_response)
@@ -167,23 +128,6 @@ class TestApp(unittest.TestCase):
         form_dict['post'] = "replytest"
         environ['QUERY_STRING'] = urllib.urlencode(form_dict)
 
-        def fake_start_response(status, headers):
-            assert status == '200 OK'
-            assert ('Content-type', 'text/html') in headers
-
-        data = self.app(environ, fake_start_response)
-
-        environ = {}                    # make a fake dict
-        environ['PATH_INFO'] = '/m/list'
-
-        def fake_start_response(status, headers):
-            assert status == '200 OK'
-            assert ('Content-type', 'text/html') in headers
-
-        data = self.app(environ, fake_start_response)
-
-        assert 'Back to Main Page' in data[0]
-        assert "first post" in data[0]
 
     def tearDown(self):
         pass

@@ -52,7 +52,6 @@ def _get_next_thread_id():
 
 # a dictionary, storing all users by a (unique, int) ID -> User object.
 _user_ids = {}
-
 # a dictionary, storing all users by username
 _users = {}
 
@@ -69,7 +68,6 @@ def _reset():
     _messages = {}
     _users = {}
     _user_ids = {}
-    _curr_user = []
 
 def save_state():
     filename = "save.pickle"
@@ -79,14 +77,12 @@ def save_state():
     fp.close()
 
 def load_state():
+    global _threads, _user_ids, _users
     try:
         filename = "save.pickle"
         fp = open(filename, 'r')
-        objects = cPickle.load(fp)
+        objects =cPickle.load(fp)
         (_threads, _user_ids, _users) = objects
-        #print "successfully loaded"
-        #print _threads, _user_ids, _users
-        return _threads, _user_ids, _users
     except IOError:
         #print "meeplib.load_state() IOError"
         return {}, {}, {}
