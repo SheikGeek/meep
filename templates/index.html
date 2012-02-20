@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block body %}
+  <h3>{{ username }} logged in!</h3>
+  <a href='/m/add_thread'>New Thread</a><br/>
+  <a href='/create_user'>Create User</a><br/>
+  <a href='/logout'>Log out</a><br/>
+  <a href='/m/list'>Show messages</a>
+{% endblock body %}
