@@ -7,5 +7,5 @@ submit
 follow "Show messages"
 
 url /m/list
-find 'FOO'
+find 'test'
 

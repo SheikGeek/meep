@@ -10,6 +10,6 @@ fv 1 title 'test title FOO'
 fv 1 message 'this is my message'
 submit
 
-url /m/add_thread_action
+url /m/list
 
 

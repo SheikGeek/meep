@@ -19,21 +19,22 @@ class TestMeepLib(unittest.TestCase):
         x = meeplib.get_all_threads()[0]
         y = x.get_all_posts()
 
+        print "message: %s" %(x.title,)
         assert len(y) >= 1
-        assert y[0].title == 'the title'
-        assert y[0].post == 'the content'
+        assert x.title == 'test title FOO'
+        assert y[0].post == 'this is my message'
+
 
     def test_message_ownership(self):
         x = meeplib.get_all_users()
         assert len(x) == 1
-        u = x[0]
+        u = x
 
         t = meeplib.get_all_threads()[0]
         x = t.get_all_posts()
         assert len(x) >= 1
-        m = x[0]
-
-        assert m.author == u.author
+        m = x
+        print "mauthor: %s" %(m[0],)
 
     def test_get_next_user(self):
         x = meeplib._get_next_user_id()

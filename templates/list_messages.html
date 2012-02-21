@@ -15,18 +15,14 @@
     <p>{{ item.post }}</p>
     <p>Posted by: {{ item.author.username }}</p>
 
-    {% if item.author == user %}
-    <form action='delete_action' method='POST'>
-    <input name='thread_id' type='hidden' value='{{ thread.id }}' />
-    <input name='post_id' type='hidden' value='{{ item.id }}' />
-    <input name='delete' type='submit' value='Delete Message' />
-    </form>
-    {% endif %}
-
     {% if user %}
     <form action='reply' method='POST'>
     <input name='thread_id' type='hidden' value='{{ thread.id }}' />
+    <input name='post_id' type='hidden' value='{{ item.id }}' />
     <input name='reply' type='submit' value='Reply to' />
+    </form>
+    <form action="delete_action" method='POST'>
+    <input name='delete' type='submit' value='Delete Message' />
     </form>
     {% endif %}
 

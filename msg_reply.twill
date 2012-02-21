@@ -11,7 +11,7 @@ fv 1 title 'foo'
 fv 1 message 'KITTENS!'
 submit
 
-fv 2 reply '0'
+fv 1 reply '0'
 submit
 
 fv 1 post 'Kittens are pretty awesome'
