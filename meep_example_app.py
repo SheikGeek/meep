@@ -260,7 +260,10 @@ class MeepExampleApp(object):
         print environ['wsgi.input']
         form = cgi.FieldStorage(fp=environ['wsgi.input'], environ=environ)
 
+        print form
+
         thread_id = int(form['thread_id'].value)
+        
         post_id = int(form['post_id'].value)
 
         t = meeplib.get_thread(thread_id)
