@@ -21,8 +21,8 @@ class TestMeepLib(unittest.TestCase):
 
         print "message: %s" %(x.title,)
         assert len(y) >= 1
-        assert x.title == 'test title FOO'
-        assert y[0].post == 'this is my message'
+        assert x.title == 'Test Thread'
+        assert y[0].post == 'This is my message!'
 
 
     def test_message_ownership(self):

@@ -30,14 +30,14 @@ class TestApp(unittest.TestCase):
     def test_index_with_auth(self):
         environ = {}                    # make a fake dict
         environ['PATH_INFO'] = '/'
-        environ['HTTP_COOKIE'] = "username=george"
+        environ['HTTP_COOKIE'] = "username=blah"
 
         def fake_start_response(status, headers):
             assert status == '200 OK'
             assert ('Content-type', 'text/html') in headers
 
         data = self.app(environ, fake_start_response)
-
+        print data[0]
         assert 'New Thread' in data[0]
         assert 'Show messages' in data[0]
 
@@ -79,13 +79,14 @@ class TestApp(unittest.TestCase):
         environ = {}                    # make a fake dict
         environ['PATH_INFO'] = '/m/add_thread'
         environ['wsgi.input'] = ''
-        environ['HTTP_COOKIE'] = "username=george"
+        environ['HTTP_COOKIE'] = "username=blah"
 
         def fake_start_response(status, headers):
             assert status == '302 Found'
             assert ('Content-type', 'text/html') in headers
 
         data = self.app(environ, fake_start_response)
+        print data
         assert 'Title: ' in data[0]
         assert 'Message: ' in data[0]
 
@@ -104,10 +105,10 @@ class TestApp(unittest.TestCase):
         environ = {}                    # make a fake dict
         environ['PATH_INFO'] = '/m/reply'
         environ['wsgi.input'] = ''
-        environ['HTTP_COOKIE'] = "username=george"
+        environ['HTTP_COOKIE'] = "username=blah"
 
         form_dict = {}
-        form_dict['thread_id'] = 1
+        form_dict['thread_id'] = meeplib.get_next_thread_id()
         environ['QUERY_STRING'] = urllib.urlencode(form_dict)
 
         def fake_start_response(status, headers):
@@ -115,6 +116,7 @@ class TestApp(unittest.TestCase):
             assert ('Content-type', 'text/html') in headers
 
         data = self.app(environ, fake_start_response)
+        print data
         assert "Message:" in data[0]
 
     def test_reply_action(self):
