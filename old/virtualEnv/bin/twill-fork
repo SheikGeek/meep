@@ -1,0 +1,5 @@
+#!/Users/Chelsea/Documents/college/semester6/CSE491/meep/virtualEnv/bin/python
+# EASY-INSTALL-SCRIPT: 'twill==0.9','twill-fork'
+__requires__ = 'twill==0.9'
+import pkg_resources
+pkg_resources.run_script('twill==0.9', 'twill-fork')
